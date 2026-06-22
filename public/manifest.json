@@ -1,0 +1,20 @@
+{
+    "name": "ویزیت ایرانیان",
+    "short_name": "visitIranian",
+    "description": "معرفی پزشکان و رزرو نوبت آنلاین",
+    "start_url": "/admin",
+    "scope": "/admin",
+    "display": "standalone",
+    "background_color": "#F8FAFC",
+    "theme_color": "#0F766E",
+    "orientation": "portrait-primary",
+    "lang": "fa",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "64x64",
+            "type": "image/x-icon"
+        }
+    ]
+}

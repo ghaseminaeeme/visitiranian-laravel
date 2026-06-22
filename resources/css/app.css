@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary-50: #f0fdfa;
+    --color-primary-100: #ccfbf1;
+    --color-primary-200: #99f6e4;
+    --color-primary-300: #5eead4;
+    --color-primary-400: #2dd4bf;
+    --color-primary-500: #14b8a6;
+    --color-primary-600: #0d9488;
+    --color-primary-700: #0f766e;
+    --color-primary-800: #115e59;
+    --color-primary-900: #134e4a;
+    --color-primary-950: #042f2e;
+
+    --color-accent-400: #fbbf24;
+    --color-accent-500: #f59e0b;
+    --color-accent-600: #d97706;
+
+    --color-vip-400: #facc15;
+    --color-vip-500: #eab308;
+    --color-vip-600: #ca8a04;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-800 antialiased;
+    }
+
+    ::selection {
+        @apply bg-primary-200 text-primary-900;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-primary-200 bg-white px-5 py-2.5 text-sm font-semibold text-primary-800 transition hover:border-primary-300 hover:bg-primary-50;
+    }
+
+    .card {
+        @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm;
+    }
+
+    .input-field {
+        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200;
+    }
+
+    .badge-vip {
+        @apply inline-flex items-center gap-1 rounded-full bg-gradient-to-l from-vip-400 to-vip-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm;
+    }
+
+    .section-title {
+        @apply text-2xl font-bold text-slate-900 md:text-3xl;
+    }
+
+    .prose-fa {
+        @apply max-w-none text-slate-700 leading-relaxed;
+    }
+
+    .prose-fa h2 {
+        @apply mt-6 mb-3 text-xl font-bold text-slate-900;
+    }
+
+    .prose-fa h3 {
+        @apply mt-4 mb-2 text-lg font-semibold text-slate-900;
+    }
+
+    .prose-fa p {
+        @apply mb-4;
+    }
+
+    .prose-fa a {
+        @apply text-primary-700 underline hover:text-primary-800;
+    }
+
+    .prose-fa ul {
+        @apply mb-4 list-disc ps-6;
+    }
+
+    .prose-fa ol {
+        @apply mb-4 list-decimal ps-6;
+    }
+}
