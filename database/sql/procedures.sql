@@ -4,7 +4,7 @@
 -- Run: mysql -u root -p visitiranian < database/sql/procedures.sql
 -- =============================================================================
 
-USE `visitiranian`;
+USE `h399366_visitiranianDb`;
 
 DELIMITER //
 

@@ -4,11 +4,11 @@
 -- Run: mysql -u root -p < database/sql/schema.sql
 -- =============================================================================
 
-CREATE DATABASE IF NOT EXISTS `visitiranian`
+CREATE DATABASE IF NOT EXISTS `h399366_visitiranianDb`
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE `visitiranian`;
+USE `h399366_visitiranianDb`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -50,6 +50,11 @@ DROP TABLE IF EXISTS `model_has_permissions`;
 DROP TABLE IF EXISTS `role_has_permissions`;
 DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `permissions`;
+DROP TABLE IF EXISTS `failed_jobs`;
+DROP TABLE IF EXISTS `job_batches`;
+DROP TABLE IF EXISTS `jobs`;
+DROP TABLE IF EXISTS `cache_locks`;
+DROP TABLE IF EXISTS `cache`;
 DROP TABLE IF EXISTS `sessions`;
 DROP TABLE IF EXISTS `password_reset_tokens`;
 DROP TABLE IF EXISTS `users`;
@@ -92,6 +97,61 @@ CREATE TABLE `sessions` (
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
   KEY `sessions_last_activity_index` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `cache` (
+  `key`        VARCHAR(255) NOT NULL,
+  `value`      MEDIUMTEXT   NOT NULL,
+  `expiration` BIGINT       NOT NULL,
+  PRIMARY KEY (`key`),
+  KEY `cache_expiration_index` (`expiration`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `cache_locks` (
+  `key`        VARCHAR(255) NOT NULL,
+  `owner`      VARCHAR(255) NOT NULL,
+  `expiration` BIGINT       NOT NULL,
+  PRIMARY KEY (`key`),
+  KEY `cache_locks_expiration_index` (`expiration`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `jobs` (
+  `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `queue`        VARCHAR(255)    NOT NULL,
+  `payload`      LONGTEXT        NOT NULL,
+  `attempts`     TINYINT UNSIGNED NOT NULL,
+  `reserved_at`  INT UNSIGNED    NULL,
+  `available_at` INT UNSIGNED    NOT NULL,
+  `created_at`   INT UNSIGNED    NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `job_batches` (
+  `id`             VARCHAR(255) NOT NULL,
+  `name`           VARCHAR(255) NOT NULL,
+  `total_jobs`     INT          NOT NULL,
+  `pending_jobs`   INT          NOT NULL,
+  `failed_jobs`    INT          NOT NULL,
+  `failed_job_ids` LONGTEXT     NOT NULL,
+  `options`        MEDIUMTEXT   NULL,
+  `cancelled_at`   INT          NULL,
+  `created_at`     INT          NOT NULL,
+  `finished_at`    INT          NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `failed_jobs` (
+  `id`         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid`       VARCHAR(255)    NOT NULL,
+  `connection` VARCHAR(255)    NOT NULL,
+  `queue`      VARCHAR(255)    NOT NULL,
+  `payload`    LONGTEXT        NOT NULL,
+  `exception`  LONGTEXT        NOT NULL,
+  `failed_at`  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`),
+  KEY `failed_jobs_connection_queue_failed_at_index` (`connection`, `queue`, `failed_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------------------
@@ -327,6 +387,7 @@ CREATE TABLE `doctor_photos` (
   `approved_by`      BIGINT UNSIGNED NULL,
   `created_at`       TIMESTAMP       NULL,
   `updated_at`       TIMESTAMP       NULL,
+  `deleted_at`       TIMESTAMP       NULL,
   PRIMARY KEY (`id`),
   KEY `doctor_photos_doctor_id_status_index` (`doctor_id`, `status`),
   CONSTRAINT `doctor_photos_doctor_id_foreign`
@@ -429,7 +490,7 @@ CREATE TABLE `appointments` (
   `reminded_2h_at`        DATETIME        NULL,
   `confirmed_slot_key`    VARCHAR(64) AS (
     CASE WHEN `status` = 'confirmed'
-      THEN CONCAT(`doctor_id`, '-', DATE_FORMAT(`starts_at`, '%Y-%m-%d %H:%i:%s'))
+      THEN CONCAT(`doctor_id`, '-', `starts_at`)
       ELSE NULL
     END
   ) STORED,
@@ -561,7 +622,7 @@ CREATE TABLE `ad_placements` (
 CREATE TABLE `advertisements` (
   `id`                  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `placement_id`        BIGINT UNSIGNED NOT NULL,
-  `display_template_id` BIGINT UNSIGNED NOT NULL,
+  `template_id`         BIGINT UNSIGNED NOT NULL,
   `title`               VARCHAR(100)    NULL,
   `subtitle`            VARCHAR(200)    NULL,
   `cta_text`            VARCHAR(50)     NULL,
@@ -571,21 +632,22 @@ CREATE TABLE `advertisements` (
   `is_active`           TINYINT(1)      NOT NULL DEFAULT 1,
   `starts_at`           DATETIME        NULL,
   `ends_at`             DATETIME        NULL,
-  `click_count`         INT UNSIGNED    NOT NULL DEFAULT 0,
-  `impression_count`    INT UNSIGNED    NOT NULL DEFAULT 0,
+  `impressions_count`   INT UNSIGNED    NOT NULL DEFAULT 0,
+  `clicks_count`        INT UNSIGNED    NOT NULL DEFAULT 0,
   `created_at`          TIMESTAMP       NULL,
   `updated_at`          TIMESTAMP       NULL,
+  `deleted_at`          TIMESTAMP       NULL,
   PRIMARY KEY (`id`),
   KEY `advertisements_placement_active_index` (`placement_id`, `is_active`, `sort_order`),
   CONSTRAINT `advertisements_placement_id_foreign`
     FOREIGN KEY (`placement_id`) REFERENCES `ad_placements` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `advertisements_display_template_id_foreign`
-    FOREIGN KEY (`display_template_id`) REFERENCES `display_templates` (`id`) ON DELETE RESTRICT
+  CONSTRAINT `advertisements_template_id_foreign`
+    FOREIGN KEY (`template_id`) REFERENCES `display_templates` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `sliders` (
   `id`                  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `display_template_id` BIGINT UNSIGNED NOT NULL,
+  `template_id`         BIGINT UNSIGNED NOT NULL,
   `title`               VARCHAR(100)    NULL,
   `subtitle`            VARCHAR(200)    NULL,
   `cta_text`            VARCHAR(50)     NULL,
@@ -597,10 +659,11 @@ CREATE TABLE `sliders` (
   `ends_at`             DATETIME        NULL,
   `created_at`          TIMESTAMP       NULL,
   `updated_at`          TIMESTAMP       NULL,
+  `deleted_at`          TIMESTAMP       NULL,
   PRIMARY KEY (`id`),
   KEY `sliders_active_sort_index` (`is_active`, `sort_order`),
-  CONSTRAINT `sliders_display_template_id_foreign`
-    FOREIGN KEY (`display_template_id`) REFERENCES `display_templates` (`id`) ON DELETE RESTRICT
+  CONSTRAINT `sliders_template_id_foreign`
+    FOREIGN KEY (`template_id`) REFERENCES `display_templates` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------------------
@@ -633,6 +696,7 @@ CREATE TABLE `pages` (
   `published_at`     DATETIME        NULL,
   `created_at`       TIMESTAMP       NULL,
   `updated_at`       TIMESTAMP       NULL,
+  `deleted_at`       TIMESTAMP       NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pages_slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -731,6 +795,7 @@ CREATE TABLE `reviews` (
   `is_approved` TINYINT(1)      NOT NULL DEFAULT 0,
   `created_at`  TIMESTAMP       NULL,
   `updated_at`  TIMESTAMP       NULL,
+  `deleted_at`  TIMESTAMP       NULL,
   PRIMARY KEY (`id`),
   KEY `reviews_doctor_approved_index` (`doctor_id`, `is_approved`),
   CONSTRAINT `reviews_doctor_id_foreign`
@@ -839,12 +904,8 @@ INSERT INTO `specialties` (`id`, `name`, `slug`, `sort_order`, `created_at`, `up
 
 -- Display templates
 INSERT INTO `display_templates` (`id`, `key`, `name`, `purpose`, `aspect_ratio`, `image_width`, `image_height`, `text_fields`, `layout_config`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'doctor_card',     'کارت پزشک',           'Doctor listing cards',           '1:1',   400,  400,  NULL,
- '{"fields":[]}',
- '{"safe_zone":"center","overlay":null}', 1, NOW(), NOW()),
-(2, 'doctor_profile',  'عکس پروفایل پزشک',    'Doctor profile header',          '1:1',   800,  800,  NULL,
- '{"fields":[]}',
- '{"safe_zone":"center","overlay":null}', 1, NOW(), NOW()),
+(1, 'doctor_card',     'کارت پزشک',           'Doctor listing cards',           '1:1',   400,  400,  NULL, '{"safe_zone":"center","overlay":null}', 1, NOW(), NOW()),
+(2, 'doctor_profile',  'عکس پروفایل پزشک',    'Doctor profile header',          '1:1',   800,  800,  NULL, '{"safe_zone":"center","overlay":null}', 1, NOW(), NOW()),
 (3, 'hero_slide',      'اسلاید صفحه اصلی',    'Homepage hero slider',           '16:9',  1920, 1080,
  '{"title":{"max":40},"subtitle":{"max":80},"cta_text":{"max":20}}',
  '{"text_position":"bottom-right","overlay":"gradient-dark"}', 1, NOW(), NOW()),
