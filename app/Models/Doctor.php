@@ -161,4 +161,31 @@ class Doctor extends Model
                     ->orWhere('published_at', '<=', now());
             });
     }
+
+    public function photoUrl(): string
+    {
+        if ($this->photo_path) {
+            if (str_starts_with($this->photo_path, 'http')) {
+                return $this->photo_path;
+            }
+
+            return asset('storage/'.$this->photo_path);
+        }
+
+        return asset(config('visitiranian.doctor_placeholder', 'images/doctor-placeholder.svg'));
+    }
+
+    public function hasPhoto(): bool
+    {
+        return filled($this->photo_path);
+    }
+
+    public function averageRating(): ?float
+    {
+        $avg = $this->reviews()
+            ->approved()
+            ->avg('rating');
+
+        return $avg !== null ? round((float) $avg, 1) : null;
+    }
 }

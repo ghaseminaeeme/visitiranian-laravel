@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Doctor;
+use App\Models\Specialty;
 use App\Services\Booking\AvailabilityBadgeService;
 use App\Services\Search\DoctorSearchService;
 use App\Services\Seo\SeoBuilder;
@@ -39,6 +41,8 @@ final class DoctorController extends Controller
             'query' => $query,
             'cityId' => $cityId,
             'specialtyId' => $specialtyId,
+            'cities' => City::query()->ordered()->get(),
+            'specialties' => Specialty::query()->ordered()->get(),
         ]);
     }
 
@@ -59,6 +63,7 @@ final class DoctorController extends Controller
 
         $relatedDoctors = Doctor::query()
             ->with(['city', 'primarySpecialty'])
+            ->withAvg(['reviews as reviews_avg_rating' => fn ($q) => $q->where('is_approved', true)], 'rating')
             ->visible()
             ->published()
             ->where('id', '!=', $doctor->id)

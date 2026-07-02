@@ -46,6 +46,7 @@ final class DoctorSearchService
 
         return Doctor::query()
             ->with(['city', 'primarySpecialty', 'specialties'])
+            ->withAvg(['reviews as reviews_avg_rating' => fn ($q) => $q->where('is_approved', true)], 'rating')
             ->visible()
             ->published()
             ->when($cityId !== null, fn (Builder $builder): Builder => $builder->where('city_id', $cityId))

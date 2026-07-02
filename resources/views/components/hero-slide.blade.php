@@ -11,7 +11,7 @@
     class="absolute inset-0"
     @if ($index > 0) style="display: none;" @endif
 >
-    <div class="relative flex h-full min-h-[420px] items-center overflow-hidden rounded-3xl bg-gradient-to-bl from-primary-800 via-primary-700 to-primary-900 md:min-h-[480px]">
+    <div class="relative flex h-full min-h-[420px] items-center overflow-hidden rounded-3xl md:min-h-[480px]" style="background: linear-gradient(135deg, var(--color-primary-950) 0%, var(--color-primary-800) 40%, var(--color-primary-700) 100%);">
         @if ($slide->image_path)
             <img
                 src="{{ str_starts_with($slide->image_path, 'http') ? $slide->image_path : asset('storage/'.$slide->image_path) }}"
@@ -20,11 +20,11 @@
                 @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif
             >
         @endif
-        <div class="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-900/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-primary-900/35 to-transparent"></div>
         <div class="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div class="max-w-2xl">
                 @if ($slide->subtitle)
-                    <p class="mb-3 text-sm font-medium text-accent-400">{{ $slide->subtitle }}</p>
+                    <p class="mb-3 text-sm font-medium text-highlight-400">{{ $slide->subtitle }}</p>
                 @endif
                 <h2 class="mb-4 text-3xl font-bold leading-tight text-white md:text-5xl">{{ $slide->title }}</h2>
                 @if ($slide->cta_text && $slide->cta_url)

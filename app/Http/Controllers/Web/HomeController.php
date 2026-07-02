@@ -29,6 +29,7 @@ final class HomeController extends Controller
 
         $featuredDoctors = \App\Models\Doctor::query()
             ->with(['city', 'primarySpecialty'])
+            ->withAvg(['reviews as reviews_avg_rating' => fn ($q) => $q->where('is_approved', true)], 'rating')
             ->visible()
             ->published()
             ->orderByDesc('is_vip')
@@ -38,6 +39,7 @@ final class HomeController extends Controller
 
         $specialties = Specialty::query()->ordered()->limit(12)->get();
         $cities = City::query()->ordered()->limit(12)->get();
+        $doctorCount = \App\Models\Doctor::query()->visible()->published()->count();
 
         return view('home', [
             'seo' => $this->seo->forHome(),
@@ -46,6 +48,7 @@ final class HomeController extends Controller
             'availabilityBadges' => $this->availability->badgesFor($featuredDoctors),
             'specialties' => $specialties,
             'cities' => $cities,
+            'doctorCount' => $doctorCount,
             'heroAds' => $this->ads->forPlacement('home_hero', 1),
             'siteTagline' => $this->settings->get('site_tagline', 'معرفی پزشکان برتر ایران'),
         ]);

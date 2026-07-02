@@ -8,25 +8,37 @@
     --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-primary-50: #f0fdfa;
-    --color-primary-100: #ccfbf1;
-    --color-primary-200: #99f6e4;
-    --color-primary-300: #5eead4;
-    --color-primary-400: #2dd4bf;
-    --color-primary-500: #14b8a6;
-    --color-primary-600: #0d9488;
-    --color-primary-700: #0f766e;
-    --color-primary-800: #115e59;
-    --color-primary-900: #134e4a;
-    --color-primary-950: #042f2e;
+    /* Primary — Deep Plum (#3A2044) */
+    --color-primary-50: #f9f6fa;
+    --color-primary-100: #f2ebf4;
+    --color-primary-200: #e4d6e9;
+    --color-primary-300: #ccb8d4;
+    --color-primary-400: #a888b5;
+    --color-primary-500: #7d5990;
+    --color-primary-600: #5a386a;
+    --color-primary-700: #3a2044;
+    --color-primary-800: #2f1a37;
+    --color-primary-900: #231428;
+    --color-primary-950: #170c18;
 
-    --color-accent-400: #fbbf24;
-    --color-accent-500: #f59e0b;
-    --color-accent-600: #d97706;
+    /* Accent — Warm Orange (#EB8F48) — رنگ دوم */
+    --color-accent-400: #f0a966;
+    --color-accent-500: #eb8f48;
+    --color-accent-600: #d67a35;
 
-    --color-vip-400: #facc15;
-    --color-vip-500: #eab308;
-    --color-vip-600: #ca8a04;
+    /* Highlight — Soft Gold (#F5CD6A) — رنگ سوم */
+    --color-highlight-400: #fae391;
+    --color-highlight-500: #f5cd6a;
+    --color-highlight-600: #e8c05a;
+
+    /* VIP — orange family (same as accent) */
+    --color-vip-400: #f0a966;
+    --color-vip-500: #eb8f48;
+    --color-vip-600: #d67a35;
+
+    /* Surfaces — soft plum tint */
+    --color-surface-50: #fbf9fc;
+    --color-surface-100: #f5f0f7;
 }
 
 @layer base {
@@ -35,41 +47,99 @@
     }
 
     body {
-        @apply bg-slate-50 text-slate-800 antialiased;
+        @apply bg-surface-50 text-slate-800 antialiased;
+        background-image:
+            radial-gradient(ellipse 90% 60% at 10% -10%, rgb(58 32 68 / 0.12), transparent),
+            radial-gradient(ellipse 70% 50% at 90% 0%, rgb(235 143 72 / 0.1), transparent),
+            radial-gradient(ellipse 55% 45% at 80% 90%, rgb(245 205 106 / 0.08), transparent),
+            radial-gradient(ellipse 50% 40% at 50% 100%, rgb(90 56 106 / 0.06), transparent);
+        background-attachment: fixed;
     }
 
     ::selection {
-        @apply bg-primary-200 text-primary-900;
+        @apply bg-primary-200 text-primary-950;
     }
 }
 
 @layer components {
     .btn-primary {
-        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-primary-600 via-primary-600 to-primary-700 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary-600/25 transition hover:from-primary-700 hover:via-primary-700 hover:to-primary-800 hover:shadow-lg hover:shadow-primary-700/30 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2;
     }
 
     .btn-accent {
-        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-accent-500 to-accent-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-accent-500/30 transition hover:from-accent-600 hover:to-orange-700 hover:shadow-lg hover:shadow-accent-500/35 focus:outline-none focus:ring-2 focus:ring-highlight-400 focus:ring-offset-2;
     }
 
     .btn-outline {
-        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-primary-200 bg-white px-5 py-2.5 text-sm font-semibold text-primary-800 transition hover:border-primary-300 hover:bg-primary-50;
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-primary-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-primary-800 backdrop-blur-sm transition hover:border-primary-300 hover:bg-primary-50 hover:shadow-sm;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-primary-50 hover:text-primary-700;
     }
 
     .card {
-        @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm;
+        @apply rounded-2xl border border-primary-100/60 bg-white/90 shadow-sm shadow-primary-950/5 backdrop-blur-sm;
+    }
+
+    .card-elevated {
+        @apply rounded-2xl border border-primary-100/50 bg-white shadow-lg shadow-primary-900/10;
     }
 
     .input-field {
-        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200;
+        @apply w-full rounded-xl border border-slate-200/80 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-primary-400 focus:outline-none focus:ring-4 focus:ring-primary-100;
+    }
+
+    .select-field {
+        @apply w-full appearance-none rounded-xl border border-slate-200/80 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-4 focus:ring-primary-100;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%233a2044' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: left 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.25em 1.25em;
+        padding-left: 2.5rem;
     }
 
     .badge-vip {
-        @apply inline-flex items-center gap-1 rounded-full bg-gradient-to-l from-vip-400 to-vip-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm;
+        @apply inline-flex items-center gap-1 rounded-full bg-gradient-to-l from-vip-400 via-vip-500 to-vip-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-md shadow-vip-500/35;
+    }
+
+    .badge-soft {
+        @apply inline-flex items-center gap-1 rounded-full bg-primary-50 px-2.5 py-1 text-xs font-semibold text-primary-700 ring-1 ring-primary-200/60;
     }
 
     .section-title {
-        @apply text-2xl font-bold text-slate-900 md:text-3xl;
+        @apply text-2xl font-extrabold tracking-tight text-slate-900 md:text-3xl;
+    }
+
+    .section-subtitle {
+        @apply mt-2 max-w-2xl text-base text-slate-600;
+    }
+
+    .page-hero {
+        @apply relative overflow-hidden rounded-3xl px-6 py-10 text-white shadow-xl shadow-primary-950/25 md:px-10 md:py-14;
+        background: linear-gradient(
+            135deg,
+            var(--color-primary-950) 0%,
+            var(--color-primary-800) 35%,
+            var(--color-primary-700) 65%,
+            var(--color-primary-900) 100%
+        );
+    }
+
+    .page-hero::before {
+        content: '';
+        @apply pointer-events-none absolute -end-24 -top-24 size-80 rounded-full blur-3xl;
+        background: radial-gradient(circle, rgb(235 143 72 / 0.28) 0%, transparent 70%);
+    }
+
+    .page-hero::after {
+        content: '';
+        @apply pointer-events-none absolute -bottom-20 -start-20 size-72 rounded-full blur-3xl;
+        background: radial-gradient(circle, rgb(245 205 106 / 0.18) 0%, transparent 70%);
+    }
+
+    .stat-pill {
+        @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-md;
     }
 
     .prose-fa {
@@ -98,5 +168,54 @@
 
     .prose-fa ol {
         @apply mb-4 list-decimal ps-6;
+    }
+
+    .doctor-card-photo {
+        @apply relative overflow-hidden bg-gradient-to-br from-primary-100 via-primary-50 to-highlight-400/15;
+    }
+
+    .doctor-card-photo::after {
+        content: '';
+        @apply pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary-950/50 to-transparent opacity-0 transition-opacity duration-300;
+    }
+
+    .group:hover .doctor-card-photo::after {
+        @apply opacity-100;
+    }
+
+    .nav-link {
+        @apply relative text-sm font-medium text-slate-600 transition hover:text-primary-700;
+    }
+
+    .nav-link-active {
+        @apply text-primary-700;
+    }
+
+    .glass-header {
+        @apply border-b border-primary-100/50 bg-white/75 backdrop-blur-xl backdrop-saturate-150;
+    }
+
+    .footer-gradient {
+        @apply border-t border-primary-100/40 bg-gradient-to-b from-white via-surface-50 to-primary-50/30;
+    }
+
+    .rating-star {
+        @apply size-4 fill-current;
+    }
+
+    .filter-panel {
+        @apply rounded-2xl border border-primary-100/50 bg-white p-5 shadow-lg shadow-primary-900/8 md:p-6;
+    }
+
+    .specialty-chip {
+        @apply flex items-center gap-3 rounded-2xl border border-primary-100/60 bg-white p-4 shadow-sm shadow-primary-950/5 transition hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md hover:shadow-primary-900/10;
+    }
+
+    .city-chip {
+        @apply rounded-full border border-primary-100 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-primary-300 hover:bg-primary-50 hover:text-primary-800 hover:shadow hover:shadow-primary-900/10;
+    }
+
+    .logo-mark {
+        @apply flex size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-sm font-black text-white shadow-lg shadow-primary-700/35 ring-2 ring-highlight-500/30;
     }
 }

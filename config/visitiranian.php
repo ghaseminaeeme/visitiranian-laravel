@@ -6,6 +6,8 @@ return [
 
     'og_image' => env('VISITIRANIAN_OG_IMAGE'),
 
+    'doctor_placeholder' => 'images/doctor-placeholder.svg',
+
     'robots_disallow' => [
         '/admin',
         '/login',
