@@ -113,6 +113,52 @@
         padding-left: 2.5rem;
     }
 
+    .ts-wrapper {
+        @apply w-full;
+    }
+
+    .ts-wrapper.single .ts-control,
+    .ts-wrapper.multi .ts-control {
+        @apply min-h-0 rounded-xl border border-slate-200/80 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition;
+    }
+
+    .ts-wrapper.single.input-active .ts-control,
+    .ts-wrapper.multi.input-active .ts-control {
+        @apply border-primary-400 ring-4 ring-primary-100;
+    }
+
+    .ts-wrapper.single .ts-control input {
+        @apply text-sm text-slate-800;
+    }
+
+    .ts-dropdown {
+        @apply z-50 mt-1 overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-lg shadow-primary-900/10;
+    }
+
+    .ts-dropdown .option {
+        @apply px-4 py-2.5 text-sm text-slate-700;
+    }
+
+    .ts-dropdown .option.active {
+        @apply bg-primary-50 text-primary-800;
+    }
+
+    .ts-dropdown .option:hover {
+        @apply bg-primary-50 text-primary-800;
+    }
+
+    .ts-dropdown .dropdown-input-wrap {
+        @apply border-b border-slate-100 bg-slate-50/80 px-3 py-2;
+    }
+
+    .ts-dropdown .dropdown-input {
+        @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100;
+    }
+
+    .ts-wrapper.single .ts-control::after {
+        @apply hidden;
+    }
+
     .badge-vip {
         @apply inline-flex items-center gap-1 rounded-full bg-gradient-to-l from-vip-400 via-vip-500 to-vip-600 px-2.5 py-0.5 text-xs font-bold text-primary-950 shadow-md shadow-vip-500/35;
     }

@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs';
 import { toJalaali, toGregorian, jalaaliMonthLength, isValidJalaaliDate } from 'jalaali-js';
 import Cropper from 'cropperjs';
+import TomSelect from 'tom-select';
 
 window.Alpine = Alpine;
 window.Cropper = Cropper;
@@ -58,5 +59,22 @@ Alpine.data('appointmentBooking', (slotsUrl) => ({
         }
     },
 }));
+
+function initSearchableSelects(root = document) {
+    root.querySelectorAll('select.select-field:not(.tomselected)').forEach((element) => {
+        new TomSelect(element, {
+            allowEmptyOption: true,
+            create: false,
+            maxOptions: null,
+            sortField: { field: 'text', direction: 'asc' },
+            plugins: ['dropdown_input'],
+            render: {
+                no_results: () => '<div class="no-results px-3 py-2 text-sm text-slate-500">موردی یافت نشد</div>',
+            },
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => initSearchableSelects());
 
 Alpine.start();
