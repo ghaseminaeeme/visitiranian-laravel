@@ -29,24 +29,18 @@
                         <input type="search" id="q" name="q" value="{{ $query }}" placeholder="نام پزشک…" class="input-field !ps-10">
                     </div>
                 </div>
-                <div>
-                    <label for="city" class="mb-1.5 block text-sm font-semibold text-slate-700">شهر</label>
-                    <select id="city" name="city" class="select-field">
-                        <option value="">همه شهرها</option>
-                        @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" @selected($cityId === $city->id)>{{ $city->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label for="specialty" class="mb-1.5 block text-sm font-semibold text-slate-700">تخصص</label>
-                    <select id="specialty" name="specialty" class="select-field">
-                        <option value="">همه تخصص‌ها</option>
-                        @foreach ($specialties as $specialty)
-                            <option value="{{ $specialty->id }}" @selected($specialtyId === $specialty->id)>{{ $specialty->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <x-searchable-select name="city" id="city" label="شهر" search-placeholder="جستجوی شهر…">
+                    <option value="">همه شهرها</option>
+                    @foreach ($cities as $city)
+                        <option value="{{ $city->id }}" @selected($cityId === $city->id)>{{ $city->name }}</option>
+                    @endforeach
+                </x-searchable-select>
+                <x-searchable-select name="specialty" id="specialty" label="تخصص" search-placeholder="جستجوی تخصص…">
+                    <option value="">همه تخصص‌ها</option>
+                    @foreach ($specialties as $specialty)
+                        <option value="{{ $specialty->id }}" @selected($specialtyId === $specialty->id)>{{ $specialty->name }}</option>
+                    @endforeach
+                </x-searchable-select>
             </div>
             <div class="mt-4 flex flex-wrap items-center gap-3">
                 <button type="submit" class="btn-primary">

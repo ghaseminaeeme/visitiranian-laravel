@@ -1,7 +1,6 @@
 import Alpine from 'alpinejs';
 import { toJalaali, toGregorian, jalaaliMonthLength, isValidJalaaliDate } from 'jalaali-js';
 import Cropper from 'cropperjs';
-import TomSelect from 'tom-select';
 
 window.Alpine = Alpine;
 window.Cropper = Cropper;
@@ -60,21 +59,64 @@ Alpine.data('appointmentBooking', (slotsUrl) => ({
     },
 }));
 
-function initSearchableSelects(root = document) {
-    root.querySelectorAll('select.select-field:not(.tomselected)').forEach((element) => {
-        new TomSelect(element, {
-            allowEmptyOption: true,
-            create: false,
-            maxOptions: null,
-            sortField: { field: 'text', direction: 'asc' },
-            plugins: ['dropdown_input'],
-            render: {
-                no_results: () => '<div class="no-results px-3 py-2 text-sm text-slate-500">موردی یافت نشد</div>',
-            },
-        });
-    });
-}
+Alpine.data('searchableSelect', () => ({
+    open: false,
+    query: '',
+    options: [],
+    value: '',
+    selectedLabel: '',
+    placeholder: 'انتخاب کنید…',
 
-document.addEventListener('DOMContentLoaded', () => initSearchableSelects());
+    init() {
+        const select = this.$refs.select;
+
+        this.options = Array.from(select.options).map((option) => ({
+            value: option.value,
+            label: option.textContent.trim(),
+        }));
+
+        const emptyOption = this.options.find((option) => option.value === '');
+        this.placeholder = emptyOption?.label || this.placeholder;
+        this.value = select.value;
+        this.syncLabel();
+    },
+
+    get filteredOptions() {
+        const term = this.query.trim().toLowerCase();
+
+        if (!term) {
+            return this.options;
+        }
+
+        return this.options.filter((option) => option.label.toLowerCase().includes(term));
+    },
+
+    syncLabel() {
+        const selected = this.options.find((option) => option.value === this.value);
+        this.selectedLabel = selected && selected.value !== '' ? selected.label : '';
+    },
+
+    select(option) {
+        this.value = option.value;
+        this.$refs.select.value = option.value;
+        this.$refs.select.dispatchEvent(new Event('change', { bubbles: true }));
+        this.syncLabel();
+        this.close();
+    },
+
+    toggle() {
+        this.open = !this.open;
+
+        if (this.open) {
+            this.query = '';
+            this.$nextTick(() => this.$refs.search?.focus());
+        }
+    },
+
+    close() {
+        this.open = false;
+        this.query = '';
+    },
+}));
 
 Alpine.start();
