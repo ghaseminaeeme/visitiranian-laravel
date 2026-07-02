@@ -26,10 +26,10 @@
             </a>
 
             <nav class="hidden items-center gap-1 md:flex" aria-label="منوی اصلی">
-                <a href="{{ route('home') }}" class="nav-link rounded-lg px-3 py-2 hover:bg-primary-50">خانه</a>
-                <a href="{{ route('doctors.index') }}" class="nav-link rounded-lg px-3 py-2 hover:bg-primary-50">پزشکان</a>
-                <a href="{{ route('peygiri') }}" class="nav-link rounded-lg px-3 py-2 hover:bg-primary-50">پیگیری نوبت</a>
-                <a href="{{ route('appointments.track') }}" class="nav-link rounded-lg px-3 py-2 hover:bg-primary-50">کد رهگیری</a>
+                <a href="{{ route('home') }}" @class(['nav-link', 'nav-link-active' => request()->routeIs('home')])>خانه</a>
+                <a href="{{ route('doctors.index') }}" @class(['nav-link', 'nav-link-active' => request()->routeIs('doctors.*') || request()->routeIs('specialties.*') || request()->routeIs('cities.*')])>پزشکان</a>
+                <a href="{{ route('peygiri') }}" @class(['nav-link', 'nav-link-active' => request()->routeIs('peygiri*')])>پیگیری نوبت</a>
+                <a href="{{ route('appointments.track') }}" @class(['nav-link', 'nav-link-active' => request()->routeIs('appointments.track*')])>کد رهگیری</a>
             </nav>
 
             <div class="hidden items-center gap-3 md:flex">
@@ -70,18 +70,22 @@
                 <form action="{{ route('doctors.index') }}" method="GET" class="mb-3">
                     <input type="search" name="q" placeholder="جستجوی پزشک…" class="input-field">
                 </form>
-                <a href="{{ route('home') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary-50" @click="close()">خانه</a>
-                <a href="{{ route('doctors.index') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary-50" @click="close()">پزشکان</a>
-                <a href="{{ route('peygiri') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary-50" @click="close()">پیگیری نوبت</a>
-                <a href="{{ route('appointments.track') }}" class="rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary-50" @click="close()">کد رهگیری</a>
+                <a href="{{ route('home') }}" @class(['rounded-xl px-3 py-2.5 text-sm font-medium transition hover:bg-primary-50', 'bg-primary-50 text-primary-700' => request()->routeIs('home'), 'text-slate-700' => ! request()->routeIs('home')]) @click="close()">خانه</a>
+                <a href="{{ route('doctors.index') }}" @class(['rounded-xl px-3 py-2.5 text-sm font-medium transition hover:bg-primary-50', 'bg-primary-50 text-primary-700' => request()->routeIs('doctors.*'), 'text-slate-700' => ! request()->routeIs('doctors.*')]) @click="close()">پزشکان</a>
+                <a href="{{ route('peygiri') }}" @class(['rounded-xl px-3 py-2.5 text-sm font-medium transition hover:bg-primary-50', 'bg-primary-50 text-primary-700' => request()->routeIs('peygiri*'), 'text-slate-700' => ! request()->routeIs('peygiri*')]) @click="close()">پیگیری نوبت</a>
+                <a href="{{ route('appointments.track') }}" @class(['rounded-xl px-3 py-2.5 text-sm font-medium transition hover:bg-primary-50', 'bg-primary-50 text-primary-700' => request()->routeIs('appointments.track*'), 'text-slate-700' => ! request()->routeIs('appointments.track*')]) @click="close()">کد رهگیری</a>
             </nav>
         </div>
     </header>
 
     @if (session('success'))
-        <div class="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm" role="alert">
-                {{ session('success') }}
+        <div class="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8" x-data="{ show: true }" x-show="show" x-transition>
+            <div class="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm font-medium text-emerald-800 shadow-sm" role="alert">
+                <svg class="mt-0.5 size-5 shrink-0 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="flex-1">{{ session('success') }}</span>
+                <button type="button" @click="show = false" class="shrink-0 rounded-lg p-1 text-emerald-500 transition hover:bg-emerald-100" aria-label="بستن">
+                    <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
         </div>
     @endif
@@ -101,13 +105,28 @@
                     <p class="mt-4 max-w-md text-sm leading-relaxed text-slate-600">
                         بزرگ‌ترین پلتفرم معرفی پزشکان ایران — جستجو بر اساس تخصص و شهر، مشاهده نظرات بیماران و رزرو نوبت آنلاین.
                     </p>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="badge-soft">
+                            <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            پزشکان تأییدشده
+                        </span>
+                        <span class="badge-soft">
+                            <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            رزرو ۲۴ ساعته
+                        </span>
+                        <span class="badge-soft">
+                            <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            نظرات واقعی بیماران
+                        </span>
+                    </div>
                 </div>
                 <div>
                     <h4 class="font-bold text-slate-900">دسترسی سریع</h4>
                     <ul class="mt-4 space-y-2.5 text-sm text-slate-600">
-                        <li><a href="{{ route('doctors.index') }}" class="transition hover:text-primary-700">لیست پزشکان</a></li>
-                        <li><a href="{{ route('peygiri') }}" class="transition hover:text-primary-700">پیگیری نوبت</a></li>
-                        <li><a href="{{ route('appointments.track') }}" class="transition hover:text-primary-700">جستجو با کد رهگیری</a></li>
+                        <li><a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 transition hover:text-primary-700 hover:gap-2.5">خانه</a></li>
+                        <li><a href="{{ route('doctors.index') }}" class="inline-flex items-center gap-1.5 transition hover:text-primary-700 hover:gap-2.5">لیست پزشکان</a></li>
+                        <li><a href="{{ route('peygiri') }}" class="inline-flex items-center gap-1.5 transition hover:text-primary-700 hover:gap-2.5">پیگیری نوبت</a></li>
+                        <li><a href="{{ route('appointments.track') }}" class="inline-flex items-center gap-1.5 transition hover:text-primary-700 hover:gap-2.5">جستجو با کد رهگیری</a></li>
                     </ul>
                 </div>
                 <div>
@@ -129,7 +148,11 @@
             </div>
             <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200/80 pt-8 text-xs text-slate-400 sm:flex-row">
                 <p>&copy; {{ \Morilog\Jalali\Jalalian::now()->format('Y') }} {{ $siteName ?? config('visitiranian.site_name') }}. تمامی حقوق محفوظ است.</p>
-                <p>ساخته شده با ❤️ برای سلامت ایرانیان</p>
+                <p class="flex items-center gap-1.5">
+                    ساخته شده با
+                    <svg class="size-4 text-accent-500" fill="currentColor" viewBox="0 0 20 20" aria-label="عشق"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+                    برای سلامت ایرانیان
+                </p>
             </div>
         </div>
     </footer>

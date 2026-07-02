@@ -7,7 +7,7 @@
         : null;
 @endphp
 
-<article {{ $attributes->merge(['class' => 'card group overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/60']) }}>
+<article {{ $attributes->merge(['class' => 'card card-hover group overflow-hidden']) }}>
     <a href="{{ route('doctors.show', $doctor) }}" class="flex h-full flex-col">
         <div class="doctor-card-photo relative {{ $compact ? 'aspect-[3/2]' : 'aspect-[4/3]' }}">
             <x-doctor-photo :doctor="$doctor" :size="$compact ? 'sidebar' : 'card'" class="size-full transition duration-500 group-hover:scale-105" />

@@ -39,8 +39,14 @@
             </div>
         </div>
 
-        <div x-show="date && !loading && slots.length === 0">
-            <p class="text-sm text-slate-500">در این تاریخ نوبت خالی وجود ندارد.</p>
+        <div x-show="date && !loading && slots.length === 0" class="rounded-xl bg-amber-50 px-3 py-2.5 text-sm text-amber-700">
+            در این تاریخ نوبت خالی وجود ندارد.
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+            <span class="h-px flex-1 bg-slate-100"></span>
+            <span class="text-xs font-semibold text-slate-400">مشخصات بیمار</span>
+            <span class="h-px flex-1 bg-slate-100"></span>
         </div>
 
         <div>
@@ -63,6 +69,11 @@
 
         @error('starts_at')<p class="text-xs text-red-600">{{ $message }}</p>@enderror
 
-        <button type="submit" class="btn-primary w-full">ثبت نوبت</button>
+        <button type="submit" class="btn-primary w-full !py-3">ثبت نوبت</button>
+
+        <p class="flex items-center justify-center gap-1.5 text-center text-xs text-slate-400">
+            <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            پس از ثبت، کد رهگیری برای پیگیری نوبت دریافت می‌کنید.
+        </p>
     </form>
 </div>
