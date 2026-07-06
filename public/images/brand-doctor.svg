@@ -1,0 +1,12 @@
+<svg width="196" height="44" viewBox="0 0 196 44" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Vazirmatn, sans-serif">
+  <defs>
+    <linearGradient id="gd" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#12b3a6"/>
+      <stop offset="1" stop-color="#0c746e"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="1" width="42" height="42" rx="13" fill="url(#gd)"/>
+  <path d="M25 11h-6v6h-6v6h6v6h6v-6h6v-6h-6z" fill="#ffffff"/>
+  <text x="188" y="20" text-anchor="end" font-size="17" font-weight="800" fill="#0f5c58">ویزیت ایرانیان</text>
+  <text x="188" y="35" text-anchor="end" font-size="10" font-weight="500" fill="#64748b">پنل پزشکان</text>
+</svg>

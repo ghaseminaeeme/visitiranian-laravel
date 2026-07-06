@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="bg-surface-50">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#0c746e">
+    <meta name="format-detection" content="telephone=no">
 
     @isset($seo)
         <x-seo.meta-tags :seo="$seo" />

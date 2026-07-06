@@ -1,15 +1,18 @@
 <div
-    class="card-elevated p-6"
+    class="card-elevated overflow-hidden"
     x-data="appointmentBooking('{{ route('appointments.slots', $doctor) }}')"
 >
-    <div class="mb-5 flex items-center gap-3">
-        <span class="flex size-10 items-center justify-center rounded-xl bg-primary-100 text-primary-700">
+    <div class="flex items-center gap-3 px-6 py-5 text-white" style="background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-600) 100%);">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-sm">
             <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </span>
-        <h2 class="text-lg font-bold text-slate-900">رزرو نوبت</h2>
+        <div>
+            <h2 class="text-lg font-bold">رزرو نوبت آنلاین</h2>
+            <p class="text-xs text-white/80">تاریخ و ساعت دلخواه را انتخاب کنید</p>
+        </div>
     </div>
 
-    <form action="{{ route('appointments.book', $doctor) }}" method="POST" class="space-y-4">
+    <form action="{{ route('appointments.book', $doctor) }}" method="POST" class="space-y-4 p-6">
         @csrf
 
         <div>
