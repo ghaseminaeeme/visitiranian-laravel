@@ -29,6 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('ویزیت ایرانیان')
+            ->brandLogo(asset('images/brand-admin.svg'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/brand-admin.svg'))
             ->colors([
                 'primary' => Color::Teal,
                 'gray' => Color::Slate,

@@ -37,6 +37,21 @@ class AppServiceProvider extends ServiceProvider
             fn (): \Illuminate\Contracts\View\View => view('filament.hooks.rtl'),
         );
 
+        FilamentView::registerRenderHook(
+            'panels::head.end',
+            fn (): \Illuminate\Contracts\View\View => view('filament.hooks.auth-styles'),
+        );
+
+        FilamentView::registerRenderHook(
+            'panels::auth.login.form.before',
+            fn (): \Illuminate\Contracts\View\View => view('filament.hooks.auth-before'),
+        );
+
+        FilamentView::registerRenderHook(
+            'panels::auth.login.form.after',
+            fn (): \Illuminate\Contracts\View\View => view('filament.hooks.auth-after'),
+        );
+
         View::composer('layouts.app', function ($view): void {
             $view->with([
                 'siteName' => config('visitiranian.site_name'),

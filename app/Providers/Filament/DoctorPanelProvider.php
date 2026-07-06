@@ -28,6 +28,9 @@ class DoctorPanelProvider extends PanelProvider
             ->path('doctor')
             ->login()
             ->brandName('پنل پزشک')
+            ->brandLogo(asset('images/brand-doctor.svg'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/brand-doctor.svg'))
             ->colors([
                 'primary' => Color::Teal,
                 'gray' => Color::Slate,
