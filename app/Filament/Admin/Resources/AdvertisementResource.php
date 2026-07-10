@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\AdvertisementResource\Pages;
+use App\Filament\Support\ImageUpload;
 use App\Filament\Support\JalaliFormatter;
 use App\Models\Advertisement;
 use Filament\Forms;
@@ -67,10 +68,7 @@ class AdvertisementResource extends Resource
                                     ->label('لینک')
                                     ->url()
                                     ->maxLength(500),
-                                Forms\Components\FileUpload::make('image_path')
-                                    ->label('تصویر')
-                                    ->image()
-                                    ->directory('advertisements')
+                                ImageUpload::make('image_path', 'advertisements')
                                     ->live(),
                                 Forms\Components\TextInput::make('sort_order')
                                     ->label('ترتیب')

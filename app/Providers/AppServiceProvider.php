@@ -43,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
         );
 
         FilamentView::registerRenderHook(
+            'panels::head.end',
+            fn (): \Illuminate\Contracts\View\View => view('filament.hooks.admin-theme'),
+            scopes: 'admin',
+        );
+
+        FilamentView::registerRenderHook(
             'panels::auth.login.form.before',
             fn (): \Illuminate\Contracts\View\View => view('filament.hooks.auth-before'),
         );

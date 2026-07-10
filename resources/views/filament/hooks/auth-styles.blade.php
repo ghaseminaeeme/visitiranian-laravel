@@ -47,4 +47,59 @@
         background: rgba(15, 23, 42, 0.92) !important;
         border-color: rgba(255, 255, 255, 0.08) !important;
     }
+
+    /* Auth footer (custom hook) — avoid relying on unscanned Tailwind utilities */
+    .vi-auth-after {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .vi-auth-secure {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.75rem;
+        background: color-mix(in srgb, var(--primary-50, #ecfdf5) 100%, transparent);
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--primary-700, #0f766e);
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    .vi-auth-secure svg,
+    .vi-auth-back svg {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+    }
+
+    .vi-auth-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+
+    .vi-auth-back:hover {
+        color: var(--primary-600, #0d9488);
+    }
+
+    .dark .vi-auth-secure {
+        background: color-mix(in srgb, var(--primary-500, #14b8a6) 10%, transparent);
+        color: var(--primary-300, #5eead4);
+    }
+
+    .dark .vi-auth-back {
+        color: #9ca3af;
+    }
 </style>

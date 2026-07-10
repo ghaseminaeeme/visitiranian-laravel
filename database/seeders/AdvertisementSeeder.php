@@ -25,7 +25,7 @@ class AdvertisementSeeder extends Seeder
 
         $imagePath = $this->downloadImage(
             'home-sidebar-promo',
-            'https://picsum.photos/seed/visitiranian-ad-sidebar/600/400',
+            'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
         );
 
         Advertisement::query()->updateOrCreate(
@@ -48,14 +48,16 @@ class AdvertisementSeeder extends Seeder
     private function downloadImage(string $name, string $url): ?string
     {
         try {
-            $contents = file_get_contents($url);
+            $response = \Illuminate\Support\Facades\Http::timeout(30)
+                ->withHeaders(['User-Agent' => 'VisitIranian/1.0'])
+                ->get($url);
 
-            if ($contents === false) {
+            if (! $response->successful()) {
                 return $url;
             }
 
             $destination = 'ads/'.$name.'.jpg';
-            Storage::disk('public')->put($destination, $contents);
+            Storage::disk('public')->put($destination, $response->body());
 
             return $destination;
         } catch (\Throwable) {

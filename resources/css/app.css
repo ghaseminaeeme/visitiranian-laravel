@@ -8,37 +8,37 @@
     --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Primary — Medical Teal (trust, calm, care) */
-    --color-primary-50: #f0fdfa;
-    --color-primary-100: #cbfbf1;
-    --color-primary-200: #97f5e5;
-    --color-primary-300: #5ce7d5;
-    --color-primary-400: #2dd0bf;
-    --color-primary-500: #12b3a6;
-    --color-primary-600: #0a9187;
-    --color-primary-700: #0c746e;
-    --color-primary-800: #0f5c58;
-    --color-primary-900: #114c49;
-    --color-primary-950: #032e2d;
+    /* Primary — Indigo Blue (trust, modern, professional) */
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #dde6ff;
+    --color-primary-200: #b8c9ff;
+    --color-primary-300: #8ea6ff;
+    --color-primary-400: #6480f8;
+    --color-primary-500: #4361ee;
+    --color-primary-600: #3352d6;
+    --color-primary-700: #2a42b0;
+    --color-primary-800: #243690;
+    --color-primary-900: #1f2f75;
+    --color-primary-950: #131c4a;
 
-    /* Accent — Warm Amber (highlights, ratings, premium pops) */
-    --color-accent-400: #fbbf40;
-    --color-accent-500: #f2a90c;
-    --color-accent-600: #cc8709;
+    /* Accent — Warm Coral (complementary CTAs & highlights) */
+    --color-accent-400: #ff9a82;
+    --color-accent-500: #ff6f59;
+    --color-accent-600: #e8553f;
 
-    /* Highlight — Soft sand for hero glows */
-    --color-highlight-400: #fcd88a;
-    --color-highlight-500: #f8c65f;
-    --color-highlight-600: #eab13f;
+    /* Highlight — Soft Gold (ratings, premium glows) */
+    --color-highlight-400: #fcd97a;
+    --color-highlight-500: #f5c14a;
+    --color-highlight-600: #daa520;
 
-    /* VIP — amber family (premium) */
-    --color-vip-400: #fbbf40;
-    --color-vip-500: #f2a90c;
-    --color-vip-600: #cc8709;
+    /* VIP — gold family (premium) */
+    --color-vip-400: #fcd97a;
+    --color-vip-500: #f5c14a;
+    --color-vip-600: #daa520;
 
-    /* Surfaces — near-white with a faint teal cast */
-    --color-surface-50: #f8fbfb;
-    --color-surface-100: #eef5f4;
+    /* Surfaces — neutral with a faint blue cast */
+    --color-surface-50: #f9fafc;
+    --color-surface-100: #f0f3f9;
 
     --radius: 1rem;
 }
@@ -51,8 +51,8 @@
     body {
         @apply bg-surface-50 text-slate-700 antialiased;
         background-image:
-            radial-gradient(ellipse 70% 55% at 100% 0%, rgb(18 179 166 / 0.07), transparent 60%),
-            radial-gradient(ellipse 60% 50% at 0% 0%, rgb(12 116 110 / 0.05), transparent 55%);
+            radial-gradient(ellipse 70% 55% at 100% 0%, rgb(67 97 238 / 0.06), transparent 60%),
+            radial-gradient(ellipse 60% 50% at 0% 0%, rgb(255 111 89 / 0.04), transparent 55%);
         background-attachment: fixed;
     }
 
@@ -108,7 +108,7 @@
 
     .select-field {
         @apply w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-4 focus:ring-primary-100;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230c746e' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%232a42b0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
         background-position: left 0.75rem center;
         background-repeat: no-repeat;
         background-size: 1.25em 1.25em;
@@ -178,13 +178,13 @@
     .page-hero::before {
         content: '';
         @apply pointer-events-none absolute -end-24 -top-24 size-80 rounded-full blur-3xl;
-        background: radial-gradient(circle, rgb(45 208 191 / 0.35) 0%, transparent 70%);
+        background: radial-gradient(circle, rgb(100 128 248 / 0.35) 0%, transparent 70%);
     }
 
     .page-hero::after {
         content: '';
         @apply pointer-events-none absolute -bottom-24 -start-16 size-72 rounded-full blur-3xl;
-        background: radial-gradient(circle, rgb(251 191 64 / 0.18) 0%, transparent 70%);
+        background: radial-gradient(circle, rgb(255 154 130 / 0.2) 0%, transparent 70%);
     }
 
     .stat-pill {
@@ -290,8 +290,8 @@
     .home-hero {
         @apply relative overflow-hidden;
         background:
-            radial-gradient(ellipse 80% 60% at 20% -10%, rgb(45 208 191 / 0.22), transparent 55%),
-            radial-gradient(ellipse 70% 55% at 100% 0%, rgb(251 191 64 / 0.12), transparent 50%),
+            radial-gradient(ellipse 80% 60% at 20% -10%, rgb(100 128 248 / 0.22), transparent 55%),
+            radial-gradient(ellipse 70% 55% at 100% 0%, rgb(255 111 89 / 0.12), transparent 50%),
             linear-gradient(165deg, var(--color-primary-950) 0%, var(--color-primary-800) 42%, var(--color-primary-700) 100%);
     }
 
@@ -355,13 +355,13 @@
     .home-cta-panel::before {
         content: '';
         @apply pointer-events-none absolute -end-20 -top-20 size-72 rounded-full blur-3xl;
-        background: radial-gradient(circle, rgb(45 208 191 / 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgb(100 128 248 / 0.4) 0%, transparent 70%);
     }
 
     .home-cta-panel::after {
         content: '';
         @apply pointer-events-none absolute -bottom-24 -start-12 size-64 rounded-full blur-3xl;
-        background: radial-gradient(circle, rgb(251 191 64 / 0.2) 0%, transparent 70%);
+        background: radial-gradient(circle, rgb(255 154 130 / 0.22) 0%, transparent 70%);
     }
 
     .home-tag {
@@ -388,8 +388,8 @@
     .doctor-hero {
         @apply relative overflow-hidden rounded-[1.75rem] text-white shadow-xl shadow-primary-950/20;
         background:
-            radial-gradient(ellipse 70% 80% at 100% 0%, rgb(45 208 191 / 0.28), transparent 55%),
-            radial-gradient(ellipse 50% 60% at 0% 100%, rgb(251 191 64 / 0.14), transparent 50%),
+            radial-gradient(ellipse 70% 80% at 100% 0%, rgb(100 128 248 / 0.28), transparent 55%),
+            radial-gradient(ellipse 50% 60% at 0% 100%, rgb(255 111 89 / 0.14), transparent 50%),
             linear-gradient(145deg, var(--color-primary-950) 0%, var(--color-primary-800) 45%, var(--color-primary-700) 100%);
     }
 

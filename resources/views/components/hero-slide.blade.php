@@ -16,11 +16,11 @@
             <img
                 src="{{ str_starts_with($slide->image_path, 'http') ? $slide->image_path : asset('storage/'.$slide->image_path) }}"
                 alt=""
-                class="absolute inset-0 size-full object-cover opacity-25"
+                class="absolute inset-0 size-full object-cover opacity-40"
                 @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif
             >
         @endif
-        <div class="absolute inset-0 bg-gradient-to-b from-primary-950/70 via-primary-900/50 to-primary-950/90"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-primary-950/75 via-primary-900/45 to-primary-950/85"></div>
     </div>
 @else
     <div

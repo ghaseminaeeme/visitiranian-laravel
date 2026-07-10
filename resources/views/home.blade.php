@@ -2,14 +2,14 @@
 
 @php
     $specialtyGradients = [
-        'from-primary-500 to-primary-700',
-        'from-cyan-500 to-teal-600',
-        'from-emerald-500 to-teal-700',
-        'from-sky-500 to-blue-600',
+        'from-indigo-500 to-blue-600',
+        'from-blue-500 to-indigo-700',
         'from-violet-500 to-purple-600',
+        'from-sky-500 to-blue-600',
         'from-rose-500 to-pink-600',
-        'from-amber-500 to-orange-600',
-        'from-lime-500 to-green-600',
+        'from-orange-500 to-rose-500',
+        'from-fuchsia-500 to-violet-600',
+        'from-cyan-500 to-blue-600',
     ];
 @endphp
 

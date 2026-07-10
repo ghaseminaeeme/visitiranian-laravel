@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\SliderResource\Pages;
+use App\Filament\Support\ImageUpload;
 use App\Filament\Support\JalaliFormatter;
 use App\Models\Slider;
 use Filament\Forms;
@@ -61,10 +62,7 @@ class SliderResource extends Resource
                                     ->label('لینک دکمه')
                                     ->url()
                                     ->maxLength(500),
-                                Forms\Components\FileUpload::make('image_path')
-                                    ->label('تصویر')
-                                    ->image()
-                                    ->directory('sliders')
+                                ImageUpload::make('image_path', 'sliders')
                                     ->live(),
                                 Forms\Components\TextInput::make('sort_order')
                                     ->label('ترتیب')

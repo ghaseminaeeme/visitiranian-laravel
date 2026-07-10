@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\DoctorResource\Pages;
 use App\Filament\Admin\Resources\DoctorResource\RelationManagers\ContactPhonesRelationManager;
+use App\Filament\Support\ImageUpload;
 use App\Filament\Support\JalaliFormatter;
 use App\Models\Doctor;
 use Filament\Forms;
@@ -33,147 +34,166 @@ class DoctorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('اطلاعات اصلی')
-                    ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label('نام')
-                            ->required()
-                            ->maxLength(255)
-                            ->live(onBlur: true),
-                        Forms\Components\TextInput::make('slug')
-                            ->label('نامک')
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-                        Forms\Components\Select::make('city_id')
-                            ->label('شهر')
-                            ->relationship('city', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Forms\Components\Select::make('primary_specialty_id')
-                            ->label('تخصص اصلی')
-                            ->relationship('primarySpecialty', 'name')
-                            ->searchable()
-                            ->preload(),
-                        Forms\Components\Select::make('specialties')
-                            ->label('تخصص‌ها')
-                            ->relationship('specialties', 'name')
-                            ->multiple()
-                            ->preload()
-                            ->searchable(),
-                        Forms\Components\Textarea::make('bio')
-                            ->label('بیوگرافی')
-                            ->rows(4)
-                            ->columnSpanFull(),
-                        Forms\Components\TextInput::make('website')
-                            ->label('وب‌سایت')
-                            ->url()
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('address')
-                            ->label('آدرس')
-                            ->rows(2)
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2),
-                Forms\Components\Section::make('تماس')
-                    ->schema([
-                        Forms\Components\TextInput::make('sms_mobile')
-                            ->label('موبایل پیامک')
-                            ->tel()
-                            ->maxLength(20)
-                            ->helperText('برای ارسال اعلان نوبت و پیامک'),
-                        Forms\Components\Repeater::make('contactPhones')
-                            ->label('شماره‌های تماس')
-                            ->relationship()
+                Forms\Components\Tabs::make('doctor_tabs')
+                    ->tabs([
+                        Forms\Components\Tabs\Tab::make('اطلاعات اصلی')
+                            ->icon('heroicon-o-user')
                             ->schema([
-                                Forms\Components\TextInput::make('phone')
-                                    ->label('شماره')
+                                Forms\Components\Grid::make(['default' => 1, 'md' => 2])
+                                    ->schema([
+                                        ImageUpload::avatar('photo_path', 'doctors')
+                                            ->columnSpan(['default' => 1, 'md' => 2]),
+                                        Forms\Components\TextInput::make('name')
+                                            ->label('نام')
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->live(onBlur: true),
+                                        Forms\Components\TextInput::make('slug')
+                                            ->label('نامک')
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->unique(ignoreRecord: true),
+                                        Forms\Components\Select::make('city_id')
+                                            ->label('شهر')
+                                            ->relationship('city', 'name')
+                                            ->searchable()
+                                            ->preload()
+                                            ->required(),
+                                        Forms\Components\Select::make('primary_specialty_id')
+                                            ->label('تخصص اصلی')
+                                            ->relationship('primarySpecialty', 'name')
+                                            ->searchable()
+                                            ->preload(),
+                                        Forms\Components\Select::make('specialties')
+                                            ->label('تخصص‌ها')
+                                            ->relationship('specialties', 'name')
+                                            ->multiple()
+                                            ->preload()
+                                            ->searchable()
+                                            ->columnSpan(['default' => 1, 'md' => 2]),
+                                        Forms\Components\Textarea::make('bio')
+                                            ->label('بیوگرافی')
+                                            ->rows(4)
+                                            ->columnSpanFull(),
+                                        Forms\Components\TextInput::make('website')
+                                            ->label('وب‌سایت')
+                                            ->url()
+                                            ->maxLength(255),
+                                        Forms\Components\Textarea::make('address')
+                                            ->label('آدرس')
+                                            ->rows(2)
+                                            ->columnSpanFull(),
+                                    ]),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('تماس')
+                            ->icon('heroicon-o-phone')
+                            ->schema([
+                                Forms\Components\TextInput::make('sms_mobile')
+                                    ->label('موبایل پیامک')
                                     ->tel()
-                                    ->required()
-                                    ->maxLength(20),
-                                Forms\Components\TextInput::make('label')
-                                    ->label('برچسب')
-                                    ->maxLength(50)
-                                    ->placeholder('مثلاً مطب، منشی'),
-                                Forms\Components\TextInput::make('sort_order')
-                                    ->label('ترتیب')
-                                    ->numeric()
-                                    ->default(0),
-                                Forms\Components\Toggle::make('is_visible')
-                                    ->label('نمایش عمومی')
-                                    ->default(true),
+                                    ->maxLength(20)
+                                    ->helperText('برای ارسال اعلان نوبت و پیامک'),
+                                Forms\Components\Repeater::make('contactPhones')
+                                    ->label('شماره‌های تماس')
+                                    ->relationship()
+                                    ->schema([
+                                        Forms\Components\TextInput::make('phone')
+                                            ->label('شماره')
+                                            ->tel()
+                                            ->required()
+                                            ->maxLength(20),
+                                        Forms\Components\TextInput::make('label')
+                                            ->label('برچسب')
+                                            ->maxLength(50)
+                                            ->placeholder('مثلاً مطب، منشی'),
+                                        Forms\Components\TextInput::make('sort_order')
+                                            ->label('ترتیب')
+                                            ->numeric()
+                                            ->default(0),
+                                        Forms\Components\Toggle::make('is_visible')
+                                            ->label('نمایش عمومی')
+                                            ->default(true),
+                                    ])
+                                    ->columns(['default' => 1, 'md' => 2])
+                                    ->defaultItems(0)
+                                    ->addActionLabel('افزودن شماره')
+                                    ->columnSpanFull(),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('وضعیت')
+                            ->icon('heroicon-o-adjustments-horizontal')
+                            ->schema([
+                                Forms\Components\Grid::make(['default' => 1, 'sm' => 2])
+                                    ->schema([
+                                        Forms\Components\Toggle::make('is_active')
+                                            ->label('فعال')
+                                            ->default(true),
+                                        Forms\Components\Toggle::make('is_published')
+                                            ->label('منتشر شده'),
+                                        Forms\Components\Toggle::make('is_vip')
+                                            ->label('VIP'),
+                                        Forms\Components\DateTimePicker::make('published_at')
+                                            ->label('تاریخ انتشار')
+                                            ->seconds(false),
+                                        Forms\Components\DateTimePicker::make('expires_at')
+                                            ->label('تاریخ انقضا')
+                                            ->seconds(false)
+                                            ->helperText('پس از این تاریخ پروفایل غیرفعال می‌شود')
+                                            ->columnSpanFull(),
+                                    ]),
+                            ]),
+                        Forms\Components\Tabs\Tab::make('حساب کاربری')
+                            ->icon('heroicon-o-key')
+                            ->schema([
+                                Forms\Components\Grid::make(['default' => 1, 'md' => 2])
+                                    ->schema([
+                                        Forms\Components\Select::make('user_id')
+                                            ->label('کاربر متصل')
+                                            ->relationship('user', 'name')
+                                            ->searchable()
+                                            ->preload()
+                                            ->visible(fn (?Doctor $record) => $record !== null),
+                                        Forms\Components\Toggle::make('create_user')
+                                            ->label('ایجاد حساب کاربری جدید')
+                                            ->default(false)
+                                            ->live()
+                                            ->visible(fn (?Doctor $record) => $record === null),
+                                        Forms\Components\TextInput::make('user_name')
+                                            ->label('نام کاربر')
+                                            ->maxLength(255)
+                                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
+                                        Forms\Components\TextInput::make('user_email')
+                                            ->label('ایمیل کاربر')
+                                            ->email()
+                                            ->maxLength(255)
+                                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
+                                        Forms\Components\TextInput::make('user_phone')
+                                            ->label('موبایل کاربر')
+                                            ->tel()
+                                            ->maxLength(20)
+                                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
+                                        Forms\Components\TextInput::make('user_password')
+                                            ->label('رمز عبور')
+                                            ->password()
+                                            ->revealable()
+                                            ->minLength(8)
+                                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
+                                    ]),
                             ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->addActionLabel('افزودن شماره')
-                            ->columnSpanFull(),
-                    ]),
-                Forms\Components\Section::make('وضعیت و اشتراک')
-                    ->schema([
-                        Forms\Components\Toggle::make('is_active')
-                            ->label('فعال')
-                            ->default(true),
-                        Forms\Components\Toggle::make('is_published')
-                            ->label('منتشر شده'),
-                        Forms\Components\Toggle::make('is_vip')
-                            ->label('VIP'),
-                        Forms\Components\DateTimePicker::make('published_at')
-                            ->label('تاریخ انتشار')
-                            ->seconds(false),
-                        Forms\Components\DateTimePicker::make('expires_at')
-                            ->label('تاریخ انقضا')
-                            ->seconds(false)
-                            ->helperText('پس از این تاریخ پروفایل غیرفعال می‌شود'),
+                            ->visible(fn (?Doctor $record) => $record === null || $record->user_id === null),
+                        Forms\Components\Tabs\Tab::make('سئو')
+                            ->icon('heroicon-o-magnifying-glass')
+                            ->schema([
+                                Forms\Components\TextInput::make('meta_title')
+                                    ->label('عنوان متا')
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('meta_description')
+                                    ->label('توضیحات متا')
+                                    ->rows(3)
+                                    ->maxLength(500),
+                            ]),
                     ])
-                    ->columns(2),
-                Forms\Components\Section::make('حساب کاربری')
-                    ->schema([
-                        Forms\Components\Select::make('user_id')
-                            ->label('کاربر متصل')
-                            ->relationship('user', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->visible(fn (?Doctor $record) => $record !== null),
-                        Forms\Components\Toggle::make('create_user')
-                            ->label('ایجاد حساب کاربری جدید')
-                            ->default(false)
-                            ->live()
-                            ->visible(fn (?Doctor $record) => $record === null),
-                        Forms\Components\TextInput::make('user_name')
-                            ->label('نام کاربر')
-                            ->maxLength(255)
-                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
-                        Forms\Components\TextInput::make('user_email')
-                            ->label('ایمیل کاربر')
-                            ->email()
-                            ->maxLength(255)
-                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
-                        Forms\Components\TextInput::make('user_phone')
-                            ->label('موبایل کاربر')
-                            ->tel()
-                            ->maxLength(20)
-                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
-                        Forms\Components\TextInput::make('user_password')
-                            ->label('رمز عبور')
-                            ->password()
-                            ->revealable()
-                            ->minLength(8)
-                            ->visible(fn (Get $get, ?Doctor $record) => $record === null && $get('create_user')),
-                    ])
-                    ->columns(2)
-                    ->visible(fn (?Doctor $record) => $record === null || $record->user_id === null),
-                Forms\Components\Section::make('سئو')
-                    ->schema([
-                        Forms\Components\TextInput::make('meta_title')
-                            ->label('عنوان متا')
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('meta_description')
-                            ->label('توضیحات متا')
-                            ->rows(2)
-                            ->maxLength(500),
-                    ])
-                    ->collapsed(),
+                    ->columnSpanFull()
+                    ->persistTabInQueryString(),
             ]);
     }
 
@@ -181,18 +201,26 @@ class DoctorResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('photo_path')
+                    ->label('')
+                    ->disk('public')
+                    ->circular()
+                    ->defaultImageUrl(asset('images/doctor-placeholder.svg'))
+                    ->size(40),
                 Tables\Columns\TextColumn::make('name')
                     ->label('نام')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold')
+                    ->description(fn (Doctor $record): ?string => $record->primarySpecialty?->name),
                 Tables\Columns\TextColumn::make('city.name')
                     ->label('شهر')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('primarySpecialty.name')
-                    ->label('تخصص'),
-                Tables\Columns\TextColumn::make('sms_mobile')
-                    ->label('موبایل پیامک')
+                    ->sortable()
                     ->toggleable(),
+                Tables\Columns\TextColumn::make('sms_mobile')
+                    ->label('موبایل')
+                    ->toggleable()
+                    ->copyable(),
                 Tables\Columns\IconColumn::make('is_vip')
                     ->label('VIP')
                     ->boolean(),
@@ -205,13 +233,11 @@ class DoctorResource extends Resource
                 Tables\Columns\TextColumn::make('expires_at')
                     ->label('انقضا')
                     ->formatStateUsing(fn ($state) => JalaliFormatter::dateTime($state))
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('ایجاد')
-                    ->formatStateUsing(fn ($state) => JalaliFormatter::dateTime($state))
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable()
+                    ->color(fn ($state) => $state && $state->isPast() ? 'danger' : null),
             ])
             ->defaultSort('name')
+            ->striped()
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_vip')
                     ->label('VIP'),
@@ -229,13 +255,19 @@ class DoctorResource extends Resource
                         ->where('expires_at', '<=', now()->addDays(config('visitiranian.expiring_doctors_days', 30)))),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('ویرایش'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->emptyStateHeading('هنوز پزشکی ثبت نشده')
+            ->emptyStateDescription('برای شروع، اولین پزشک را ثبت کنید.')
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make()
+                    ->label('ثبت پزشک جدید'),
             ]);
     }
 

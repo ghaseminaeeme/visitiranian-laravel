@@ -36,8 +36,18 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Teal,
                 'gray' => Color::Slate,
             ])
-            ->sidebarCollapsibleOnDesktop()
-            ->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarWidth('17rem')
+            ->navigationGroups([
+                'مدیریت پزشکان',
+                'اطلاعات پایه',
+                'محتوا و تبلیغات',
+                'پیامک',
+                'پشتیبانی',
+                'گزارش‌ها',
+                'تنظیمات',
+                'سیستم',
+                'عمومی',
+            ])
             ->maxContentWidth(MaxWidth::Full)
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')

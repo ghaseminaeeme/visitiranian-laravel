@@ -13,7 +13,9 @@ class ListDoctors extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('ثبت پزشک جدید')
+                ->icon('heroicon-o-plus-circle'),
         ];
     }
 }
