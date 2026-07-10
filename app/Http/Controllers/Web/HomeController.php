@@ -37,8 +37,18 @@ final class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        $specialties = Specialty::query()->ordered()->limit(12)->get();
-        $cities = City::query()->ordered()->limit(12)->get();
+        $specialties = Specialty::query()
+            ->withCount(['doctors' => fn ($q) => $q->visible()->published()])
+            ->ordered()
+            ->limit(12)
+            ->get();
+
+        $cities = City::query()
+            ->with(['province'])
+            ->withCount(['doctors' => fn ($q) => $q->visible()->published()])
+            ->ordered()
+            ->limit(12)
+            ->get();
         $doctorCount = \App\Models\Doctor::query()->visible()->published()->count();
 
         return view('home', [

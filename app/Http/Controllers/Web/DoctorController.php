@@ -77,6 +77,7 @@ final class DoctorController extends Controller
             'seo' => $this->seo->forDoctor($doctor),
             'doctor' => $doctor,
             'relatedDoctors' => $relatedDoctors,
+            'availability' => $this->availability->badgeFor($doctor),
         ]);
     }
 }

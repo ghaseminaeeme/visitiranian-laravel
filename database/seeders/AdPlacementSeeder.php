@@ -20,6 +20,13 @@ class AdPlacementSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'key' => 'home_sidebar',
+                'name' => 'سایدبار صفحه اصلی',
+                'description' => 'پایین صفحه اصلی',
+                'allowed_template_keys' => ['sidebar_ad'],
+                'is_active' => true,
+            ],
+            [
                 'key' => 'listing_sidebar',
                 'name' => 'سایدبار لیست پزشکان',
                 'description' => 'کنار نتایج جستجو و لیست‌ها',

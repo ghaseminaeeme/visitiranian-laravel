@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             PageSeeder::class,
             DoctorSeeder::class,
+            SliderSeeder::class,
+            AdvertisementSeeder::class,
         ]);
     }
 }

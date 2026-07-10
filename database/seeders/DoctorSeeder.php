@@ -25,7 +25,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر علی رضایی',
             'slug' => 'dr-ali-rezaei',
             'city' => 'tehran',
-            'specialty' => 'cardiology',
+            'specialty' => 'cardiologist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/men/32.jpg',
             'bio' => "فوق تخصص قلب و عروق با بیش از ۱۸ سال سابقه.\nتخصص در اکوکاردیوگرافی، آنژیوگرافی و درمان بیماری‌های مزمن قلبی.\nعضو انجمن قلب ایران.",
@@ -36,7 +36,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر مریم کریمی',
             'slug' => 'dr-maryam-karimi',
             'city' => 'tehran',
-            'specialty' => 'dermatology',
+            'specialty' => 'dermatologist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/women/44.jpg',
             'bio' => "متخصص پوست، مو و زیبایی.\nدرمان آکنه، لک، پیری پوست و لیزر درمانی.\nدارای بورد تخصصی از دانشگاه علوم پزشکی تهران.",
@@ -47,7 +47,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر حسین محمدی',
             'slug' => 'dr-hossein-mohammadi',
             'city' => 'mashhad',
-            'specialty' => 'pediatrics',
+            'specialty' => 'pediatrician',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/men/52.jpg',
             'bio' => "متخصص اطفال و نوزادان.\nویزیت و واکسیناسیون، رشد و تکامل کودکان.\nپذیرش شبانه‌روزی در بخش اورژانس اطفال.",
@@ -57,8 +57,8 @@ class DoctorSeeder extends Seeder
         [
             'name' => 'دکتر فاطمه احمدی',
             'slug' => 'dr-fatemeh-ahmadi',
-            'city' => 'isfahan-city',
-            'specialty' => 'obstetrics-gynecology',
+            'city' => 'isfahan',
+            'specialty' => 'gynecologist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/women/68.jpg',
             'bio' => "متخصص زنان، زایمان و نازایی.\nجراحی‌های لاپاراسکوپی و مراقبت‌های بارداری.\nبیش از ۱۵۰۰ زایمان موفق.",
@@ -69,7 +69,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر رضا نوری',
             'slug' => 'dr-reza-nouri',
             'city' => 'shiraz',
-            'specialty' => 'internal-medicine',
+            'specialty' => 'internist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/men/75.jpg',
             'bio' => "متخصص داخلی و فوق تخصص گوارش.\nاندوسکopy، کولونوسکopy و درمان بیماری‌های التهابی روده.",
@@ -80,7 +80,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر سارا موسوی',
             'slug' => 'dr-sara-mousavi',
             'city' => 'tabriz',
-            'specialty' => 'ophthalmology',
+            'specialty' => 'ophthalmologist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/women/26.jpg',
             'bio' => "متخصص چشم‌پزشکی و جراحی لیزیک.\nدرمان آب مروارید، گلوکوم و اصلاح بینایی.",
@@ -91,7 +91,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر امیر حسینی',
             'slug' => 'dr-amir-hosseini',
             'city' => 'karaj',
-            'specialty' => 'orthopedics',
+            'specialty' => 'orthopedist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/men/46.jpg',
             'bio' => "متخصص ارتوپدی و جراحی مفاصل.\nتعویض مفصل زانو و لگن، درمان شکستگی و آسیب‌های ورزشی.",
@@ -102,7 +102,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر نرگس صادقی',
             'slug' => 'dr-narges-sadeghi',
             'city' => 'rasht',
-            'specialty' => 'psychiatry',
+            'specialty' => 'psychiatrist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/women/65.jpg',
             'bio' => "متخصص روانپزشک و روان‌درمانگر.\nدرمان افسردگی، اضطراب، OCD و اختلالات خواب.\nجلسات فردی و خانواده‌درمانی.",
@@ -113,7 +113,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر مهدی جعفری',
             'slug' => 'dr-mehdi-jafari',
             'city' => 'ahvaz',
-            'specialty' => 'urology',
+            'specialty' => 'urologist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/men/22.jpg',
             'bio' => "متخصص اورولوژی و جراحی کلیه.\nدرمان سنگ کلیه، پروستات و ناتوانی‌های جنسی مردان.",
@@ -123,8 +123,8 @@ class DoctorSeeder extends Seeder
         [
             'name' => 'دکتر لیلا باقری',
             'slug' => 'dr-leila-bagheri',
-            'city' => 'gorgan',
-            'specialty' => 'ent',
+            'city' => 'sari',
+            'specialty' => 'ent-specialist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/women/33.jpg',
             'bio' => "متخصص گوش، حلق و بینی.\nجراحی سینوس، tonsillectomy و اصلاح انحراف بینی.",
@@ -135,7 +135,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر پرویز اکبری',
             'slug' => 'dr-parviz-akbari',
             'city' => 'tehran',
-            'specialty' => 'neurology',
+            'specialty' => 'neurologist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/men/67.jpg',
             'bio' => "متخصص مغز و اعصاب.\nدرمان سردرد، میگرن، ام‌اس و بیماری‌های عصبی.\nدارای فلوشیپ از آلمان.",
@@ -145,8 +145,8 @@ class DoctorSeeder extends Seeder
         [
             'name' => 'دکتر نازنین رحیمی',
             'slug' => 'dr-nazanin-rahimi',
-            'city' => 'qom',
-            'specialty' => 'dentistry',
+            'city' => 'kashan',
+            'specialty' => 'dentist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/women/47.jpg',
             'bio' => "متخصص دندانپزشکی زیبایی و ایمپلنت.\nطراحی لبخند، بلیچینگ و جراحی فک.",
@@ -157,7 +157,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر کامران شریفی',
             'slug' => 'dr-kamran-sharifi',
             'city' => 'mashhad',
-            'specialty' => 'cardiology',
+            'specialty' => 'cardiologist',
             'is_vip' => false,
             'photo' => null,
             'bio' => "متخصص قلب و عروق.\nنوار قلب، فشار خون و کنترل کلسترول.",
@@ -167,8 +167,8 @@ class DoctorSeeder extends Seeder
         [
             'name' => 'دکتر زهرا ملکی',
             'slug' => 'dr-zahra-maleki',
-            'city' => 'isfahan-city',
-            'specialty' => 'pediatrics',
+            'city' => 'isfahan',
+            'specialty' => 'pediatrician',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/women/89.jpg',
             'bio' => "متخصص اطفال.\nویزیت نوزادان، تغذیه و بیماری‌های شایع کودکان.",
@@ -179,7 +179,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر بهرام کاظمی',
             'slug' => 'dr-bahram-kazemi',
             'city' => 'tehran',
-            'specialty' => 'internal-medicine',
+            'specialty' => 'internist',
             'is_vip' => false,
             'photo' => 'https://randomuser.me/api/portraits/men/11.jpg',
             'bio' => "متخصص داخلی و دیابت.\nمدیریت قند خون، فشار خون و چربی خون.",
@@ -190,7 +190,7 @@ class DoctorSeeder extends Seeder
             'name' => 'دکتر شیدا فرهادی',
             'slug' => 'dr-shida-farhad',
             'city' => 'shiraz',
-            'specialty' => 'obstetrics-gynecology',
+            'specialty' => 'gynecologist',
             'is_vip' => true,
             'photo' => 'https://randomuser.me/api/portraits/women/72.jpg',
             'bio' => "متخصص زنان و زایمان.\nسونوگرافی، مراقبت‌های بارداری و مشاوره قبل از بارداری.",
@@ -265,7 +265,29 @@ class DoctorSeeder extends Seeder
             return $destination;
         }
 
+        if ($fallbackUrl !== null && str_starts_with($fallbackUrl, 'http')) {
+            return $this->downloadRemotePhoto($slug, $fallbackUrl);
+        }
+
         return $fallbackUrl;
+    }
+
+    private function downloadRemotePhoto(string $slug, string $url): ?string
+    {
+        try {
+            $contents = file_get_contents($url);
+
+            if ($contents === false) {
+                return $url;
+            }
+
+            $destination = 'doctor-photos/seed/'.$slug.'.jpg';
+            Storage::disk('public')->put($destination, $contents);
+
+            return $destination;
+        } catch (\Throwable) {
+            return $url;
+        }
     }
 
     private function findLocalPhoto(string $slug): ?string

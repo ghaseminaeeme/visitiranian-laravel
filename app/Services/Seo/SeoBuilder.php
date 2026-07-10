@@ -59,7 +59,13 @@ final class SeoBuilder
 
     public function forDoctor(Doctor $doctor): SeoData
     {
-        $doctor->loadMissing(['city.province', 'primarySpecialty', 'specialties']);
+        $doctor->loadMissing([
+            'city.province',
+            'primarySpecialty',
+            'specialties',
+            'contactPhones' => fn ($q) => $q->visible()->ordered(),
+            'reviews' => fn ($q) => $q->approved(),
+        ]);
 
         $specialty = $doctor->primarySpecialty?->name
             ?? $doctor->specialties->first()?->name
@@ -67,11 +73,11 @@ final class SeoBuilder
         $city = $doctor->city?->name ?? '';
 
         $title = $doctor->meta_title
-            ?: "{$doctor->name} | {$specialty} در {$city}";
+            ?: "{$doctor->name} | {$specialty} در {$city} | نوبت آنلاین";
 
         $shortBio = Str::limit(strip_tags((string) $doctor->bio), 120, '…');
         $description = $doctor->meta_description
-            ?: "{$doctor->name}، {$specialty} در {$city}. {$shortBio}";
+            ?: "رزرو نوبت آنلاین {$doctor->name}، {$specialty} در {$city}. مشاهده آدرس مطب، نظرات بیماران و نوبت‌دهی. {$shortBio}";
 
         $url = route('doctors.show', $doctor);
         $image = $doctor->photo_path
@@ -83,6 +89,13 @@ final class SeoBuilder
             ['label' => 'پزشکان', 'url' => route('doctors.index')],
         ];
 
+        if ($doctor->primarySpecialty) {
+            $breadcrumbs[] = [
+                'label' => $doctor->primarySpecialty->name,
+                'url' => route('specialties.show', $doctor->primarySpecialty),
+            ];
+        }
+
         if ($doctor->city) {
             $breadcrumbs[] = [
                 'label' => $doctor->city->name,
@@ -92,24 +105,48 @@ final class SeoBuilder
 
         $breadcrumbs[] = ['label' => $doctor->name, 'url' => null];
 
+        $physician = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Physician',
+            '@id' => $url.'#physician',
+            'name' => $doctor->name,
+            'url' => $url,
+            'image' => $image,
+            'medicalSpecialty' => $specialty,
+            'description' => strip_tags((string) $doctor->bio) ?: "{$specialty} در {$city}",
+            'address' => array_filter([
+                '@type' => 'PostalAddress',
+                'streetAddress' => $doctor->address,
+                'addressLocality' => $doctor->city?->name,
+                'addressRegion' => $doctor->city?->province?->name,
+                'addressCountry' => 'IR',
+            ]),
+        ];
+
+        $phones = $doctor->contactPhones->pluck('phone')->filter()->values()->all();
+        if ($phones !== []) {
+            $physician['telephone'] = count($phones) === 1 ? $phones[0] : $phones;
+        }
+
+        if ($doctor->website) {
+            $physician['sameAs'] = [$doctor->website];
+        }
+
+        $reviewCount = $doctor->reviews->count();
+        $avgRating = $reviewCount > 0 ? round((float) $doctor->reviews->avg('rating'), 1) : null;
+        if ($avgRating !== null && $reviewCount > 0) {
+            $physician['aggregateRating'] = [
+                '@type' => 'AggregateRating',
+                'ratingValue' => $avgRating,
+                'reviewCount' => $reviewCount,
+                'bestRating' => 5,
+                'worstRating' => 1,
+            ];
+        }
+
         $jsonLd = [
             $this->organizationSchema(),
-            [
-                '@context' => 'https://schema.org',
-                '@type' => 'Physician',
-                'name' => $doctor->name,
-                'url' => $url,
-                'image' => $image,
-                'medicalSpecialty' => $specialty,
-                'description' => strip_tags((string) $doctor->bio),
-                'address' => [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => $doctor->address,
-                    'addressLocality' => $doctor->city?->name,
-                    'addressRegion' => $doctor->city?->province?->name,
-                    'addressCountry' => 'IR',
-                ],
-            ],
+            $physician,
             $this->breadcrumbSchema($breadcrumbs),
         ];
 
